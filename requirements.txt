@@ -2,3 +2,4 @@ Flask==3.0.3
 Flask-SQLAlchemy==3.1.1
 SQLAlchemy==2.0.35
 pyodbc==5.1.0
+gunicorn==23.0.0
