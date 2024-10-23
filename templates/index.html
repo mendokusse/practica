@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Информация о компании</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        function downloadCompanyInfo() {
+            const companyId = document.getElementById('company').value;
+
+            // Отправляем запрос на сервер для получения информации о компании
+            fetch(`/analytics/download?id=${companyId}`, {
+                method: 'GET'
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Создаем и скачиваем текстовый файл с данными
+                const blob = new Blob([data], { type: 'text/plain' });
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = `company_${companyId}_info.txt`;
+                link.click();
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</head>
+<body>
+    <h1>Выберите компанию для получения информации</h1>
+
+    <form id="companyForm">
+        <label for="company">Компания:</label>
+        <select id="company" name="id">
+            {% for company in companies %}
+                <option value="{{ company.ID }}">{{ company.OrganizationName }}</option>
+            {% endfor %}
+        </select>
+        <button type="button" onclick="downloadCompanyInfo()">Скачать текстовый файл</button>
+    </form>
+</body>
+</html>
