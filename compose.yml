@@ -1,9 +1,0 @@
-version: '3.8'
-
-services:
-  flask_app:
-    build: .
-    ports:
-      - "8000:8000"
-  environment:
-    - SQLALCHEMY_DATABASE_URI=mssql+pyodbc://sa:<CK6d/ehm>@94.241.174.143:1433/analytics?driver=ODBC+Driver+17+for+SQL+Server
